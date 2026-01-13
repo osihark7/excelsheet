@@ -17,4 +17,7 @@
 11. Inside of the  Helper Package you can make a ExcelHelper Class and metion the all details
 12. Inside of the controller package you can make a UsersDetailsController class.
 13. These all are implemented successfully you can check you api in browser or postmain
-14. http://localhost:9092/sheet/api/download 
+14. http://localhost:9092/sheet/api/createUser     // create user 
+15. http://localhost:9092/sheet/api/users  // get user list
+16. http://localhost:9092/sheet/api/users/18 // get user by userid
+17. http://localhost:9092/sheet/api/download  // download the excel sheet data to hit this api in browser
