@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,20 +40,20 @@ public class UserDetailsController {
 	@GetMapping("/users")
 	public ResponseEntity<List<UserDetails>> getUserList() {
 		List<UserDetails> userData = userDetailsService.getUserList();
-		if(userData.isEmpty()) {
+		if (userData.isEmpty()) {
 			return ResponseEntity.notFound().build();
-		}else {
+		} else {
 			return ResponseEntity.ok(userData);
 		}
 	}
-	
+
 	@GetMapping("/users/{id}")
-	public ResponseEntity<UserDetails> getUserById(@PathVariable("id") Long id) {
+	public ResponseEntity<?> getUserById(@PathVariable("id") Long id) {
 		Optional<UserDetails> userData = userDetailsService.getUserById(id);
 		if (userData.isPresent()) {
 			return ResponseEntity.ok(userData.get());
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with ID " + id + " Record not found");
 		}
 	}
 
