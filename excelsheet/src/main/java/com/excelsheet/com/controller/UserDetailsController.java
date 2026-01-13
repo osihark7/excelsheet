@@ -38,13 +38,21 @@ public class UserDetailsController {
 	@GetMapping("/users")
 	public ResponseEntity<List<UserDetails>> getUserList() {
 		List<UserDetails> userData = userDetailsService.getUserList();
-		return ResponseEntity.ok(userData);
+		if(userData.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}else {
+			return ResponseEntity.ok(userData);
+		}
 	}
 	
 	@GetMapping("/users/{id}")
-	public ResponseEntity<Optional<UserDetails>> getUserById(@PathVariable("id") Long id) {
-	    Optional<UserDetails> userData = userDetailsService.getUserById(id);
-	    return ResponseEntity.ok(userData);
+	public ResponseEntity<UserDetails> getUserById(@PathVariable("id") Long id) {
+		Optional<UserDetails> userData = userDetailsService.getUserById(id);
+		if (userData.isPresent()) {
+			return ResponseEntity.ok(userData.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/download")
